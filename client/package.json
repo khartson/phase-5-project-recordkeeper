@@ -7,10 +7,6 @@
     "node": "16.x"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@fontsource/public-sans": "^4.5.11",
-    "@mui/joy": "^5.0.0-alpha.59",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
@@ -21,6 +17,8 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "4.0.3",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.4",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
