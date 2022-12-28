@@ -1,10 +1,14 @@
 import React from 'react';
+import Router from './Router';
+import { SiteContainer } from './Common';
 
 function App() {
+
+
   return (
-    <>
-    <h1>Hello</h1>
-    </>
+    <SiteContainer>
+      <Router/>
+    </SiteContainer>
   );
 }
 
