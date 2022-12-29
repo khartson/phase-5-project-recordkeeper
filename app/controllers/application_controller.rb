@@ -16,7 +16,6 @@ class ApplicationController < ActionController::API
 
   def render_unprocessable_entity_response(invalid)
     render json: { errors: Hash[invalid.record.errors.collect { | e | [ e.attribute, e.full_message ]}] }, status: :unprocessable_entity
-    # render json: { errors: invalid.record.errors.full_messages }
   end 
 
   def render_not_found_response(invalid)

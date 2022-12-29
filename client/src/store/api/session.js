@@ -1,5 +1,4 @@
 import { ErrorResponse } from '@remix-run/router';
-import { useReducer } from 'react';
 import axios from './axios'; 
 
 class Session {
@@ -32,11 +31,16 @@ class Session {
     catch (error) {
       return { user: null, errors: error.response.data.errors };  
     }
-
   }
 
-  logout() {
-    return axios.delete('/logout'); 
+  async logout() {
+    try {
+      await axios.delete('/logout'); 
+      return { user: null, errors: [] }; 
+    }
+    catch(error) {
+      return { errors: error.response.data.errors}
+    }
   }
 
 }

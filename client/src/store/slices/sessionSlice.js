@@ -33,8 +33,8 @@ export const signup = createAsyncThunk(
 export const logout = createAsyncThunk(
   "session/logout",
   async() => {
-    const res = session.logout();
-    return res; 
+    session.logout();
+    return; 
   }
 )
 
