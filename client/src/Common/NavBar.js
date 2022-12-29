@@ -28,7 +28,7 @@ function NavBar() {
   const url = createIconUrl(user.icon); 
 
   return ( 
-    <Menu style={{ background: '#1B1C1D'}}fixed='top' inverted secondary borderless>
+    <Menu style={{ background: '#1B1C1D'}} fixed='top' inverted secondary borderless>
         <Container>
         <Menu.Item header>
           <Image size='mini' src='/logo512.png' style={{ marginRight: '1.5em' }} />
@@ -46,8 +46,14 @@ function NavBar() {
           onClick={handleItemClick}/>
         <Menu.Item
           icon='user'
-          name='profile' as={Link} to='profile'
+          name='profile' as={Link} to={`/users/${user.username}`}
           active={activeItem === 'profile'}
+          onClick={handleItemClick}
+        />
+        <Menu.Item 
+          icon='users'
+          name='users' as={Link} to='/users'
+          active={activeItem === 'users'}
           onClick={handleItemClick}
         />
           
