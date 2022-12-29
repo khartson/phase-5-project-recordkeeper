@@ -52,7 +52,8 @@ class Api::SessionsController < ApplicationController
   # if the user exists with an invalid password, it will faith the authenticate
   # check and return a password error, since the user exists
   def render_login_errors(user)
-    render json: { errors: user.nil? ? ["Invalid username"] : ["Invalid password"] }, status: :unauthorized
+    render json: { errors: user.nil? ? { "username": "Incorrect username" } : 
+                                       { "password": "Incorrect password" } }, status: :unauthorized
   end 
   
 end
