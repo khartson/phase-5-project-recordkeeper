@@ -1,3 +1,1 @@
-export { fetchUser, login, signup, clearErrors } from './slices';
-
-// export { login } from './slices';
+export { fetchUser, login, signup, logout, clearErrors } from './slices';

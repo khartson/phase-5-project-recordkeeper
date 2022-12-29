@@ -30,7 +30,15 @@ export const signup = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk(
+  "session/logout",
+  async() => {
+    const res = session.logout();
+    return res; 
+  }
+)
 
+// logout 
 const sessionSlice = createSlice({
   name: 'session',
   initialState: {
@@ -66,6 +74,14 @@ const sessionSlice = createSlice({
     [signup.fulfilled](state,action) {
       state.user   = action.payload.user;
       state.errors = action.payload.errors;
+      state.status = 'idle'; 
+    },
+    [logout.pending](state) {
+      state.status = 'loading'
+    },
+    [logout.fulfilled](state) {
+      state.user   = null;
+      state.errors = [];
       state.status = 'idle'; 
     }
   }
