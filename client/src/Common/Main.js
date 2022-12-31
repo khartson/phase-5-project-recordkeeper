@@ -9,7 +9,7 @@ function Main({ children }) {
   return(
   <>
     <NavBar/>
-    <Container border style={style.siteContainer}>
+    <Container style={style.siteContainer}>
     <div style={style.div1}>
       <div style={style.div2}>
         {children}
@@ -22,4 +22,3 @@ function Main({ children }) {
 }
 
 export default Main; 
-// '&::WebkitScrollbar': { width: 0, height: 0 }

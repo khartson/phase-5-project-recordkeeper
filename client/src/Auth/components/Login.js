@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { login } from '../../store';
+import { session } from '../../store';
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function LoginForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(login({ 
+    dispatch(session.login({ 
       user: {
         username: username,
         password: password

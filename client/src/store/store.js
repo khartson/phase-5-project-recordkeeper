@@ -4,7 +4,8 @@ import * as slices from './slices';
 
 const store = configureStore({
   reducer: {
-    session: slices.sessionSlice
+    session: slices.sessionSlice,
+    user: slices.userSlice
   }
 });
 

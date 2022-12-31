@@ -6,13 +6,13 @@ import {
   Menu,
 } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
-import { logout } from '../store';
+import { session } from '../store';
 import { createIconUrl } from '../Helpers';
 import { useDispatch, useSelector } from 'react-redux';
 
 function NavBar() {
 
-  const { user } = useSelector((state)=>state.session);
+  const { currentUser } = useSelector((state)=>state.session);
 
   const dispatch = useDispatch();
   const [activeItem, setActiveItem] = useState('');
@@ -22,10 +22,10 @@ function NavBar() {
   }
 
   function handleSignOut() {
-    dispatch(logout()); 
+    dispatch(session.logout()); 
   }
 
-  const url = createIconUrl(user.icon); 
+  const url = createIconUrl(currentUser.icon); 
 
   return ( 
     <Menu style={{ background: '#1B1C1D'}} fixed='top' inverted secondary borderless>
@@ -44,23 +44,19 @@ function NavBar() {
           name='feed'as={Link} to='/feed'
           active={activeItem === 'feed'}
           onClick={handleItemClick}/>
-        <Menu.Item
-          icon='user'
-          name='profile' as={Link} to={`/users/${user.username}`}
-          active={activeItem === 'profile'}
-          onClick={handleItemClick}
-        />
-        <Menu.Item 
-          icon='users'
-          name='users' as={Link} to='/users'
-          active={activeItem === 'users'}
-          onClick={handleItemClick}
-        />
           
         <Menu.Menu position='right'>
         <Dropdown item simple trigger={<Image avatar src={url}/>}>
           <Dropdown.Menu>
-            <Dropdown.Header>{user.username}</Dropdown.Header>
+            <Dropdown.Header>{currentUser.username}</Dropdown.Header>
+            <Dropdown.Item
+              as={Link} to={`/users/${currentUser.username}`}
+              name='profile'
+              icon='user'
+              text='Profile'
+              active={activeItem === 'profile'}
+              onClick={handleItemClick}
+            />
             <Dropdown.Item
               as={Link} to='/settings'
               name='settings'

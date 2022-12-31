@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { signup } from '../../store';
+import { session } from '../../store';
 
 function CreateAccount() {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function CreateAccount() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(signup({ 
+    dispatch(session.signup({ 
       user: {
         username: username,
         password: password,
