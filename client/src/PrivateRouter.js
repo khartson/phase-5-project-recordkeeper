@@ -1,6 +1,8 @@
 import React from 'react'; 
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Main } from './Common';
+import { Users, User } from './Users';
+import { Settings } from './Settings';
 
 function PrivateRouter() {
   return(
@@ -9,7 +11,10 @@ function PrivateRouter() {
         <Route path='/' element={<h1>Home</h1>}/>
         <Route path='/feed' element={<h1>Feed</h1>}/>
         <Route path='/profile' element={<h1>Profile</h1>}/>
-        <Route path='/settings' element={<h1>Settings</h1>}/>
+        <Route path='/settings' element={<Settings/>}/>
+        <Route path='/users' element={<Users/>}>
+          <Route path=':username' element={<User/>}/>
+        </Route>
         <Route path='/*' element={<Navigate to='/'/>}/>
         </Routes>
       </Main>

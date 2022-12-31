@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Navigate, Link} from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUser } from './store';
+import { session } from './store';
 import { Auth } from './Auth';
 import PrivateRouter from './PrivateRouter';
 
 function Router() {
 
-  const user = useSelector((state)=>state.session.user);
+  const currentUser = useSelector((state)=>state.session.currentUser);
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(fetchUser());
+    dispatch(session.me());
   }, [dispatch]);
 
   return (
     <>
-    { user? (
+    { currentUser? (
       <PrivateRouter/>
     ) : (
       <Routes>

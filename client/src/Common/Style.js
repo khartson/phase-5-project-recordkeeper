@@ -12,4 +12,22 @@ style.container = {
   background: '#767d85',
 }
 
+style.div1 = {
+  height: '100%', 
+  width: '100%', 
+  overflow: 'hidden' 
+}
+
+style.div2 = { 
+  height: '100%', 
+  width: '100%', 
+  overflow: 'auto'
+}
+
+style.siteContainer = {
+  background: 'white', 
+  height: '100%', 
+  marginTop: '4em', 
+  padding: '7em'
+}
 export default style;

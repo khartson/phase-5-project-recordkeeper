@@ -2,7 +2,7 @@ import React from 'react';
 import { CreateAccount, Login } from '../components';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { clearErrors } from '../../store';
+import { session } from '../../store';
 
 function Auth() {
 
@@ -10,7 +10,7 @@ function Auth() {
 
   let location = useLocation();
   if (['/auth/login', '/auth/signup'].includes(location.pathname)) {
-    dispatch(clearErrors()); 
+    dispatch(session.clearErrors()); 
   }
   return( 
     <Routes>

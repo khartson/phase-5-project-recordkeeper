@@ -4,15 +4,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { session } from '../api';
 
 // auto login, correspond to '/me' route
-export const fetchUser = createAsyncThunk(
-  "session/fetchUser",
+export const me = createAsyncThunk(
+  "session/me",
   async () => {
     const res = session.me();
     return res; 
   }
 );
 
-// login, requests '/me' route
+// login, requests '/login' route
 export const login = createAsyncThunk(
   "session/login", 
   async (data) => {
@@ -30,19 +30,28 @@ export const signup = createAsyncThunk(
   }
 );
 
+// logout
 export const logout = createAsyncThunk(
   "session/logout",
   async() => {
-    const res = session.logout();
-    return res; 
+    session.logout();
+    return; 
   }
 )
 
-// logout 
+// change password
+export const changePassword = createAsyncThunk(
+  "session/changePassword",
+  async(data) => {
+    const res = await session.change_password(data);
+    return res;
+  }
+)
+
 const sessionSlice = createSlice({
   name: 'session',
   initialState: {
-    user: null,
+    currentUser: null,
     errors: [],
     status: 'idle',
   }, 
@@ -52,11 +61,11 @@ const sessionSlice = createSlice({
     }
   },
   extraReducers: {
-    [fetchUser.pending](state) {
+    [me.pending](state) {
       state.status = 'loading';
     },
-    [fetchUser.fulfilled](state, action) {
-      state.user   = action.payload.user;
+    [me.fulfilled](state, action) {
+      state.currentUser   = action.payload.user;
       state.errors = action.payload.errors;
       state.status = 'idle'; 
     },
@@ -64,7 +73,7 @@ const sessionSlice = createSlice({
       state.status = 'loading';
     },
     [login.fulfilled](state, action) {
-      state.user   = action.payload.user;
+      state.currentUser   = action.payload.user;
       state.errors = action.payload.errors;
       state.status = 'idle'; 
     },
@@ -72,7 +81,7 @@ const sessionSlice = createSlice({
       state.status = 'loading'
     },
     [signup.fulfilled](state,action) {
-      state.user   = action.payload.user;
+      state.currentUser   = action.payload.user;
       state.errors = action.payload.errors;
       state.status = 'idle'; 
     },
@@ -80,9 +89,16 @@ const sessionSlice = createSlice({
       state.status = 'loading'
     },
     [logout.fulfilled](state) {
-      state.user   = null;
+      state.currentUser   = null;
       state.errors = [];
       state.status = 'idle'; 
+    },
+    [changePassword.pending](state) {
+      state.status = 'loading'
+    },
+    [changePassword.fulfilled](state, action) {
+      state.errors = action.payload.errors;
+      state.status = 'idle';
     }
   }
 })
