@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   scope module: 'api' do
 
     resources :users
+    patch '/change_password', to: 'users#change_password'
+    patch '/new_icon', to: "users#new_icon"
 
     # auth flow routes
     post '/signup', to: "sessions#signup"
