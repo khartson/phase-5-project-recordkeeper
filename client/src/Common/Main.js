@@ -7,7 +7,7 @@ import style from './Style';
 function Main({ children }) {
 
   return(
-  <>
+    <>
     <NavBar/>
     <Container style={style.siteContainer}>
     <div style={style.div1}>
@@ -17,7 +17,7 @@ function Main({ children }) {
     </div>
     </Container>
     <Footer/>
-  </>
+    </>
   )
 }
 

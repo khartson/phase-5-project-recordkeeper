@@ -1,5 +1,5 @@
 const style = {}
-
+const url = "https://ecommerce-platforms.com/wp-content/uploads/2013/12/50-seamless-grundge-patterns-1549494990.jpg"
 style.container = {
   position: 'fixed',
   display: 'flex',
@@ -9,7 +9,7 @@ style.container = {
   left: 0,
   width: '100%',
   height: '100%',
-  background: '#767d85',
+  backgroundImage: "linear-gradient(-45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%,  rgba(255,53,127,1) 100%)" 
 }
 
 style.div1 = {
@@ -27,7 +27,10 @@ style.div2 = {
 style.siteContainer = {
   background: 'white', 
   height: '100%', 
-  marginTop: '4em', 
-  padding: '7em'
+  marginTop: '0em', 
+  paddingTop: '7rem',
+  paddingLeft: '4rem',
+  paddingRight: '4rem',
+  width: '1400px'
 }
 export default style;
