@@ -7,6 +7,12 @@ class User < ApplicationRecord
   # which will render a unique profile image on instantiation
   before_create :set_icon
 
+
+  def change_icon
+    self.set_icon
+    self.save
+  end 
+
   private
   
   # set_icon 
@@ -18,4 +24,5 @@ class User < ApplicationRecord
                                  density: 0.5, stroke: 0.2,
                                  mirror: :none).render
   end 
+
 end

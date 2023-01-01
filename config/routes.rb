@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   scope module: 'api' do
 
     resources :users
+    # custom user routes for sensitive information where
+    # user info grabbed from session/@current_user
     patch '/change_password', to: 'users#change_password'
     patch '/new_icon', to: "users#new_icon"
+    delete '/delete_account', to: "users#delete_account"
 
     # auth flow routes
     post '/signup', to: "sessions#signup"

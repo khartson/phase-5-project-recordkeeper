@@ -41,10 +41,20 @@ class Session {
       return { errors: error.response.data.errors};
     }
   }
+  
+  async update(data) {
+    try {
+      const user = await axios.patch(`/users/${data.id}`, data.params);
+      return { user: user.data, errors: [] }; 
+    } 
+    catch(error) {
+      return { errors: error.response.data.errors }; 
+    }
+  }
 
   async change_password(data) {
     try {
-     const res = await axios.patch('/change_password', data);
+     await axios.patch('/change_password', data);
      return { errors: []};
     } 
     catch(error) {
@@ -52,6 +62,26 @@ class Session {
     }
   }
 
+  async new_icon() {
+    try {
+      const icon = await axios.patch('/new_icon');
+      return { icon: icon.data, errors: [] };  
+    }
+    catch(error) {
+      return { errors: error.response.data.errors }; 
+    }
+  }
+
+  async delete_account(data) {
+    // debugger;
+    try {
+      await axios.delete('/delete_account', { data: data });
+      return { user: false, errors: []};
+    }
+    catch(error) {
+      return { user: true, errors: error.response.data.errors }; 
+    }
+  }
 }
 
 export default new Session(); 
