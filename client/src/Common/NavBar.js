@@ -29,10 +29,9 @@ function NavBar() {
 
   return ( 
     <Menu style={{ background: '#1B1C1D'}} fixed='top' inverted secondary borderless>
-        <Container>
+        <Container style={{ width: '1450px'}}>
         <Menu.Item header>
-          <Image size='mini' src='/logo512.png' style={{ marginRight: '1.5em' }} />
-          Record Keeper
+          <Image src='/logo.svg' style={{ borderRadius: '5px',height: '36px', width: '84px', objectFit: 'cover' }}/>
         </Menu.Item>
         <Menu.Item
           icon='home'

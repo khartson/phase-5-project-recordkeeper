@@ -6,9 +6,10 @@ function Footer() {
   return(
         <Segment inverted style={{ position: 'absolute', left: 0, bottom: 0, right: 0, margin: '5em 0em 0em', padding: '1em 0em' }} vertical>
           <Container textAlign='center'>
-            <Image src='/logo512.png' centered size='mini' />
             <List horizontal inverted divided link size='small'>
-              <Header inverted>My Links</Header>
+              <List.Item>
+                <Image src='/logo_no_bg.svg' size='tiny' />
+              </List.Item>
               <List.Item>
                 <List.Content>
                   <List.Icon name='github'/>
