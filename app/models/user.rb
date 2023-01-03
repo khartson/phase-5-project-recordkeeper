@@ -1,6 +1,10 @@
 class User < ApplicationRecord
   has_secure_password
 
+  # relationships
+  has_many :posts, dependent: :destroy
+
+
   # validations - username must exist and be unique
   validates :username, presence: true, uniqueness: true
   # use gem 'Icodi' to create a user svg string icon,

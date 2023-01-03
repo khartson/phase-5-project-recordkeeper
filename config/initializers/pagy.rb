@@ -105,7 +105,7 @@ Pagy::DEFAULT[:items]  = 3                                # default
 # require 'pagy/extras/frontend_helpers'
 require 'pagy/extras/metadata'
 # For performance reasons, you should explicitly set ONLY the metadata you use in the frontend
-Pagy::DEFAULT[:metadata] = %i[first_url last_url page_url count series ]   # example
+Pagy::DEFAULT[:metadata] = %i[first_url last_url page_url next_url prev_url count]   # example
 
 # Searchkick extra: Paginate `Searchkick::Results` objects
 # See https://ddnexus.github.io/pagy/docs/extras/searchkick
