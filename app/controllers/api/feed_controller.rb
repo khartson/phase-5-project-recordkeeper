@@ -7,7 +7,7 @@ class Api::FeedController < ApplicationController
     render json: {
       data: ActiveModel::Serializer::CollectionSerializer.new(
                       @posts, serializer: FeedPostsSerializer),
-      **pagy_metadata(@pagy)
+      meta: pagy_metadata(@pagy)
     }
   end 
 

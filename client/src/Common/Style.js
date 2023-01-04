@@ -1,5 +1,4 @@
 const style = {}
-const url = "https://ecommerce-platforms.com/wp-content/uploads/2013/12/50-seamless-grundge-patterns-1549494990.jpg"
 style.container = {
   position: 'fixed',
   display: 'flex',
@@ -15,13 +14,13 @@ style.container = {
 style.div1 = {
   height: '100%', 
   width: '100%', 
-  overflow: 'hidden' 
+  overflow: 'hidden',
 }
 
 style.div2 = { 
-  height: '100%', 
+  height: '90%', 
   width: '100%', 
-  overflow: 'auto'
+  overflow: 'auto',
 }
 
 style.siteContainer = {

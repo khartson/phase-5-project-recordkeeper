@@ -5,7 +5,6 @@ function Users() {
 
   return (
     <>
-    {/* <h1>Users</h1> */}
     <Outlet/>
     </>
   )

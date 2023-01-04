@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
     # default routes
     # resources :posts, exc
-    resources :users
+    resources :users, constraints: { id: /.*/ }
 
     get '/posts', to: 'feed#posts'
 

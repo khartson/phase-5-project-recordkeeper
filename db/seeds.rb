@@ -24,27 +24,28 @@ youtube_posts = Array.new(20) { | i | {
                                         content: Faker::Lorem.paragraph_by_chars(number: 120),
                                         embeddable: true,
                                         link: 'https://www.youtube.com/watch?v=ScMzIvxBSi4',
-                                        preview_image: Faker::Placeholdit.image,
+                                        preview_image: Faker::Placeholdit.image(background_color: :random),
                                         user_id: Faker::Number.between(from: 1, to: 22)
                                 } }
 Post.create!(youtube_posts)
 
-youtube_posts = Array.new(20) { | i | { 
+vimeo_posts = Array.new(20) { | i | { 
                                         title: Faker::Lorem.paragraph_by_chars(number: 15),
                                         content: Faker::Lorem.paragraph_by_chars(number: 120),
                                         embeddable: true,
-                                        link: 'https://www.youtube.com/watch?v=ScMzIvxBSi4',
-                                        preview_image: Faker::Placeholdit.image,
+                                        link: 'https://vimeo.com/253989945',
+                                        preview_image: Faker::Placeholdit.image(background_color: :random),
                                         user_id: Faker::Number.between(from: 1, to: 22)
                                 } }
 
+Post.create!(vimeo_posts)
 
 gist_posts = Array.new(20) { | i | { 
                                         title: Faker::Lorem.paragraph_by_chars(number: 15),
                                         content: Faker::Lorem.paragraph_by_chars(number: 120),
                                         embeddable: true,
                                         link: 'https://gist.github.com/bsimpson/4088286https://www.youtube.com/watch?v=ScMzIvxBSi4',
-                                        preview_image: Faker::Placeholdit.image,
+                                        preview_image: Faker::Placeholdit.image(background_color: :random),
                                         user_id: Faker::Number.between(from: 1, to: 22)
                                 } }
 Post.create!(gist_posts) 
@@ -54,7 +55,7 @@ non_embed_posts = Array.new(20) { | i | {
                                         content: Faker::Lorem.paragraph_by_chars(number: 120),
                                         embeddable: false,
                                         link: Faker::Internet.url,
-                                        preview_image: Faker::Placeholdit.image,
+                                        preview_image: Faker::Placeholdit.image(background_color: :random),
                                         user_id: Faker::Number.between(from: 1, to: 22)
                                 } }
 Post.create!(non_embed_posts)

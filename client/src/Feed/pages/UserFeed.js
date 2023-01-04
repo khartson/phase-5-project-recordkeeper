@@ -1,28 +1,36 @@
-import React, { useState } from 'react'; 
+import React, { createRef, useEffect } from 'react'; 
 import { FeedMenu } from '../components';
-import UnsplashReact, { InsertIntoApplicationUploader } from "unsplash-react"
-import { Image } from 'semantic-ui-react';
+import { FeedPosts } from '../../Posts';
+import { Image, 
+         Segment,
+         Ref,
+         Sticky,
+         } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
+import { feed as _ } from '../../store';
 
 function UserFeed() {
 
-  const [imageUrl, setImageUrl] = useState('');
+  const dispatch = useDispatch();
 
+  useEffect(()=>{
+    dispatch(_.posts());
+
+  }, [dispatch]);
+
+  const contextRef = createRef();
+  
   return(
-  <>
-    <FeedMenu/>
-    {/* <div>{process.env.REACT_APP_VARIABLE}</div> */}
-    {/* <Image src={imageUrl}/> */}
-      {/* <UnsplashReact
-        accessKey={process.env.REACT_APP_UNSPLASH_KEY}
-        applicationName="unsplash_react"
-        Uploader={InsertIntoApplicationUploader}
-        photoRatio={16 / 9}
-        preferredSize={{ width: 800, height: 450 }}
-        onFinishedUploading={(imageUrl) => setImageUrl(imageUrl)}
-      /> */}
-
-    <h1> feed </h1>
-  </>
+  <div>
+  <Ref innerRef={contextRef}>
+  <div>
+    <Sticky offset={95} pushable context={contextRef}>
+      <FeedMenu/>
+    </Sticky>
+    <FeedPosts/>
+  </div>
+  </Ref>
+  </div>
   )
 } 
 

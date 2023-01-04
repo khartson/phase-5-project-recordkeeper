@@ -1,0 +1,1 @@
+export { FeedPosts } from './pages';
