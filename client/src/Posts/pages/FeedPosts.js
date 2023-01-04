@@ -6,14 +6,12 @@ import { Feed, Item, Segment,
 
 function FeedPosts() {
 
-  const { posts } = useSelector((state)=>state.feed);
+  const { posts, status } = useSelector((state)=>state.feed);
   if (posts) return (
-    // <Segment>
       <Item.Group divided>
-        {posts.data.map((post)=><FeedPost post={post}/>)}
+        {posts.data.map((post)=><FeedPost key={post.id} post={post}/>)}
       </Item.Group>
-    // </Segment>
-  )
+  ) 
   return <h1>No Posts</h1>
 
 }

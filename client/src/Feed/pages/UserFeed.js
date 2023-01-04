@@ -6,12 +6,13 @@ import { Image,
          Ref,
          Sticky,
          } from 'semantic-ui-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { feed as _ } from '../../store';
 
 function UserFeed() {
 
   const dispatch = useDispatch();
+  const posts    = useSelector((state)=>state.feed.posts);
 
   useEffect(()=>{
     dispatch(_.posts());
@@ -20,11 +21,11 @@ function UserFeed() {
 
   const contextRef = createRef();
   
-  return(
+  if (posts) return(
   <div>
   <Ref innerRef={contextRef}>
   <div>
-    <Sticky offset={95} pushable context={contextRef}>
+    <Sticky offset={95} context={contextRef}>
       <FeedMenu/>
     </Sticky>
     <FeedPosts/>
@@ -32,6 +33,7 @@ function UserFeed() {
   </Ref>
   </div>
   )
+  return <h1>No Posts</h1>
 } 
 
 export default UserFeed; 

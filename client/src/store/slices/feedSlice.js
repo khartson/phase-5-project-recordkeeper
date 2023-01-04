@@ -6,7 +6,7 @@ import { feed } from "../api";
 // user's following
 export const posts = createAsyncThunk(
   "feed/posts",
-  async(data='') => {
+  async(data) => {
     const res = feed.posts(data);
     return res; 
   }

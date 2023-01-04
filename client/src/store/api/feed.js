@@ -3,10 +3,14 @@ import qs from 'qs';
 
 class Feed {
 
-  async posts(data) {
-    const params = qs.stringify(data, { encodeValuesOnly: true, arrayFormat: 'brackets' });
+  async posts(data='') {
+
+    const url    = data.url? data.url : '/posts';
+    const params = data.params? '' : data.params;
+
+    debugger; 
     try {
-      const posts = await axios.get('/posts', params)
+      const posts = await axios.get(url)
       return { posts: posts.data, errors: [] }; 
     }
     catch(error) {
