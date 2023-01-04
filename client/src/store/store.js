@@ -5,7 +5,8 @@ import * as slices from './slices';
 const store = configureStore({
   reducer: {
     session: slices.sessionSlice,
-    user: slices.userSlice
+    user: slices.userSlice,
+    feed: slices.feedSlice,
   }
 });
 

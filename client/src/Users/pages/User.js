@@ -4,10 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { user as _ } from '../../store';
 import { Segment,
          Item,
-         Loader,
          Button,
          Icon,
-         Label
                    } from 'semantic-ui-react';
 import { createIconUrl } from '../../Helpers';
 import { Link } from 'react-router-dom'; 
@@ -22,7 +20,7 @@ function User() {
 
   useEffect(()=> {
     dispatch(_.show(username));
-  }, [dispatch]); 
+  }, [dispatch, username]); 
 
   if (status === 'loading') return <h1>Loading</h1>
   if (user) return (

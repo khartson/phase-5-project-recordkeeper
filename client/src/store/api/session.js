@@ -73,7 +73,6 @@ class Session {
   }
 
   async delete_account(data) {
-    // debugger;
     try {
       await axios.delete('/delete_account', { data: data });
       return { user: false, errors: []};

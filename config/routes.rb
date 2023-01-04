@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
   scope module: 'api' do
 
-    resources :users
+    # default routes
+    # resources :posts, exc
+    resources :users, constraints: { id: /.*/ }
+
+    get '/posts', to: 'feed#posts'
+
+    # feed routes for paramaterizing, serializing, and
+    # accepting depending search data
+
     # custom user routes for sensitive information where
     # user info grabbed from session/@current_user
     patch '/change_password', to: 'users#change_password'
