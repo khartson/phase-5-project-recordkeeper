@@ -16,6 +16,7 @@ function UserFeed() {
 
   useEffect(()=>{
     dispatch(_.posts());
+    dispatch(_.users());
 
   }, [dispatch]);
 

@@ -4,13 +4,16 @@ import qs from 'qs';
 class Feed {
 
   async posts(data='') {
+    
+    debugger; 
 
     const url    = data.url? data.url : '/posts';
-    const params = data.params? '' : data.params;
+    const params = data.query? data.query : '';
 
-    debugger; 
+    debugger;
+
     try {
-      const posts = await axios.get(url)
+      const posts = await axios.get(url, { params })
       return { posts: posts.data, errors: [] }; 
     }
     catch(error) {
@@ -18,14 +21,18 @@ class Feed {
     }
   }
 
-  async users(data) {
+  async users() {
     try {
-      const users = await axios.get();
+      const users = await axios.get('/users');
       return { users: users.data, errors: [] }; 
     }
     catch(error) {
       return { users: null, errros: error.response.data.errors }; 
     }
+  }
+
+  async search_users() {
+
   }
 
   async tags(data) {

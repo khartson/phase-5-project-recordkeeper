@@ -12,6 +12,14 @@ export const posts = createAsyncThunk(
   }
 ); 
 
+export const users = createAsyncThunk(
+  'feed/users',
+  async() => {
+    const res = feed.users();
+    return res; 
+  }
+)
+
 const feedSlice = createSlice({
   name: 'feed',
   initialState: {
@@ -29,6 +37,14 @@ const feedSlice = createSlice({
     },
     [posts.fulfilled](state, action) {
       state.posts  = action.payload.posts;
+      state.errors = action.payload.errors;
+      state.status = 'idle'; 
+    },
+    [users.pending](state) {
+      state.status = 'loading';
+    },
+    [users.fulfilled](state, action) {
+      state.users  = action.payload.users;
       state.errors = action.payload.errors;
       state.status = 'idle'; 
     }
