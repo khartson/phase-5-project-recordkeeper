@@ -21,7 +21,7 @@ function FeedMenu() {
       key:  'videos',
       text: 'Videos',
       value: 'videos',
-      icon: 'video'
+      icon: 'videos'
     },
     {
       key:    'articles',
