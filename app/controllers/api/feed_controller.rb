@@ -12,6 +12,7 @@ class Api::FeedController < ApplicationController
   end 
 
   def users
+    render json: User.all.sample(10), each_serializer: UserSearchSerializer
   end 
 
   def tags
