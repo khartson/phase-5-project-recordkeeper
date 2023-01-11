@@ -18,7 +18,7 @@ function Auth() {
     if (['/auth/login', '/auth/signup'].includes(location.pathname)) {
     dispatch(session.clearErrors()); 
   }
-  }, [location.pathname]);
+  }, [dispatch, location.pathname]);
 
   return( 
     <Routes>

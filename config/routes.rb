@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     # shortform content related to user feeds 
     get '/posts', to: 'feed#posts'
     get '/users', to: 'feed#users'
+    get '/tags',  to: 'feed#tags'
 
     # search controller to allow for 
     # fuzzy searching against multiple models

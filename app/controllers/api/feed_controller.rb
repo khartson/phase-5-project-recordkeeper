@@ -16,6 +16,7 @@ class Api::FeedController < ApplicationController
   end 
 
   def tags
+    render json: Tag.all
   end 
 
   private 

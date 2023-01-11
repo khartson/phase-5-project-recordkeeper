@@ -67,14 +67,14 @@ p '🌱 Seeding...'
 
 # Tag.all.each do | t | t.posts << Array.new(3) { | p | Post.find(Faker::Number.between(from: 1, to: 60)) } end 
 
-kyle_posts = Array.new(20) { | i | { title: Faker::Lorem.paragraph_by_chars(number: 20),
-                                     content: Faker::Lorem.paragraph_by_chars(number: 180),
-                                     embeddable: true,
-                                     link: 'https://www.youtube.com/watch?v=wBu7zPctus4',
-                                     preview_image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80',
-                                     user_id: 1 
-                            }}
-Post.create!(kyle_posts);
+# kyle_posts = Array.new(20) { | i | { title: Faker::Lorem.paragraph_by_chars(number: 20),
+#                                      content: Faker::Lorem.paragraph_by_chars(number: 180),
+#                                      embeddable: true,
+#                                      link: 'https://www.youtube.com/watch?v=wBu7zPctus4',
+#                                      preview_image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80',
+#                                      user_id: 1 
+#                             }}
+# Post.create!(kyle_posts);
 
 p '✔️ Done.'
 
