@@ -3,12 +3,19 @@ Rails.application.routes.draw do
 
     # default routes
     # resources :posts, exc
-    resources :users, constraints: { id: /.*/ }
+    resources :users, only: [:create, :update, :show], constraints: { id: /.*/ }
 
+    # feed results, for filtering and displaying 
+    # shortform content related to user feeds 
     get '/posts', to: 'feed#posts'
+    get '/users', to: 'feed#users'
+    get '/tags',  to: 'feed#tags'
 
-    # feed routes for paramaterizing, serializing, and
-    # accepting depending search data
+    # search controller to allow for 
+    # fuzzy searching against multiple models
+    # easier to reuse functionality if this 
+    # is all in one controller 
+    get '/search', to: 'search#search'
 
     # custom user routes for sensitive information where
     # user info grabbed from session/@current_user

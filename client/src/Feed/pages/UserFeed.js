@@ -1,9 +1,7 @@
 import React, { createRef, useEffect } from 'react'; 
 import { FeedMenu } from '../components';
 import { FeedPosts } from '../../Posts';
-import { Image, 
-         Segment,
-         Ref,
+import { Ref,
          Sticky,
          } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +14,8 @@ function UserFeed() {
 
   useEffect(()=>{
     dispatch(_.posts());
+    dispatch(_.users());
+    dispatch(_.tags());
 
   }, [dispatch]);
 

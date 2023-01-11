@@ -1,9 +1,6 @@
 import React, { useState } from 'react'; 
-import { Segment,
-         Form,
+import { Form,
          Container,
-         Image,
-         Item,
          Button,
        } from 'semantic-ui-react';
 import { session as _ } from '../../store' 

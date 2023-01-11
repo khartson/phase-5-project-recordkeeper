@@ -53,3 +53,4 @@ gem "active_model_serializers", "~> 0.10.12"
 gem "icodi"
 gem "faker"
 gem "pagy"
+gem 'pg_search'

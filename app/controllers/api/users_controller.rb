@@ -1,12 +1,12 @@
 class Api::UsersController < ApplicationController
 
-  def index
-    @pagy, @users = pagy(User.all)
-    render json: {
-      data: @users,
-      **pagy_metadata(@pagy)
-    }
-  end 
+  # def index
+  #   @pagy, @users = pagy(User.all)
+  #   render json: {
+  #     data: @users,
+  #     **pagy_metadata(@pagy)
+  #   }
+  # end 
 
   # find a user by username. opted to not use the 
   # find(:id) route simply because I prefer formatting

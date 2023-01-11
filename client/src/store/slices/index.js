@@ -1,5 +1,3 @@
-import { feed } from '../api';
-
 // session exports 
 export { default as sessionSlice } from './sessionSlice';
 export  * as session  from './sessionSlice';

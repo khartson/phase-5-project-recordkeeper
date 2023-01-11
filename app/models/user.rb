@@ -12,6 +12,13 @@ class User < ApplicationRecord
   before_create :set_icon
 
 
+  # search scope: enable fuzzy searching on user model
+  # by username
+  # eg User.username_search 'khartso' #=> <User username: 'khartson2017'>
+  pg_search_scope :username_search, against: :username, using: [:tsearch, :trigram]
+
+  # public icon method, accessible outside of initializiation when
+  # a user wants to change their
   def change_icon
     self.set_icon
     self.save

@@ -4,13 +4,11 @@ import qs from 'qs';
 class Feed {
 
   async posts(data='') {
-
     const url    = data.url? data.url : '/posts';
-    const params = data.params? '' : data.params;
+    const params = data.query? qs.stringify(data.query, {arrayFormat: 'brackets', addQueryPrefix: true, encode: false }) : '';
 
-    debugger; 
     try {
-      const posts = await axios.get(url)
+      const posts = await axios.get(url+params)
       return { posts: posts.data, errors: [] }; 
     }
     catch(error) {
@@ -18,24 +16,35 @@ class Feed {
     }
   }
 
-  async users(data) {
+  async users() {
     try {
-      const users = await axios.get();
+      const users = await axios.get('/users');
       return { users: users.data, errors: [] }; 
     }
     catch(error) {
-      return { users: null, errros: error.response.data.errors }; 
+      return { users: null, errors: error.response.data.errors }; 
     }
   }
 
-  async tags(data) {
+  async tags() {
     try {
-      const tags = await axios.get(); 
+      const tags = await axios.get('/tags');
       return { tags: tags.data, errors: [] };
     }
     catch(error) {
-      return { tags: null, errors: error.respons.data.errors }; 
+      return { tags: null, errors: error.response.data.errors };
     }
+  }
+
+  async search_users(query) {
+    try {
+      const users = await axios.get(`/search/?user=${query}`);
+      return { users: users.data, errors: [] };
+    }
+    catch(error) {
+      return { users: null, errors: error.response.data.errors };
+    }
+
   }
 
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { FeedPost } from '../components';
-import { Feed, Item, Segment, 
-                  } from 'semantic-ui-react';
+import { Item     } from 'semantic-ui-react';
 
 function FeedPosts() {
 
