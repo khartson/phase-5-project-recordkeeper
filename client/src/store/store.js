@@ -7,6 +7,7 @@ const store = configureStore({
     session: slices.sessionSlice,
     user: slices.userSlice,
     feed: slices.feedSlice,
+    post: slices.postSlice,
   }
 });
 

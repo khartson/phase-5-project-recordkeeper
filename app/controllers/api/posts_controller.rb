@@ -1,8 +1,8 @@
 class Api::PostsController < ApplicationController
 
-  def index 
-    # @pagy, @records 
-    render json: Post.all
+  def show
+    post = Post.find(params[:id])
+    render json: post
   end 
 
 

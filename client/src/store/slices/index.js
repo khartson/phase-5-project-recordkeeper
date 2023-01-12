@@ -10,4 +10,7 @@ export * as user from './userSlice';
 export { default as feedSlice } from './feedSlice';
 export * as feed from './feedSlice'; 
 
+// post exports
+export { default as postSlice } from './postSlice';
+export * as post from './postSlice';
 

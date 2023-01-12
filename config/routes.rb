@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     # default routes
     # resources :posts, exc
     resources :users, only: [:create, :update, :show], constraints: { id: /.*/ }
+    resources :posts, only: [:create, :update, :show]
 
     # feed results, for filtering and displaying 
     # shortform content related to user feeds 
