@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu, 
          Segment,
          Pagination,
@@ -20,6 +20,11 @@ function FeedMenu() {
 
 
   const dispatch = useDispatch(); 
+
+  // useEffect(()=>{
+  //   dispatch(_.users());
+  //   dispatch(_.tags());
+  // }, [dispatch]);
   
   // pagination metadata
   const { meta } = useSelector((state)=>state.feed.posts);
@@ -36,9 +41,10 @@ function FeedMenu() {
   // DEBOUNCED USER SEARCH FUNCTIONS 
   // initial, random set of users to populate 
   // dropdown
+  // const [initialUsers, setUsers] = useState([]);
   const initialUsers = users.map((user)=>{ 
     return { value: user.id, label: user.username, icon: user.icon}
-  }); 
+  })
 
   // fetch user requests on typed query -> load the results
   // into the dropdown menu 
@@ -130,7 +136,6 @@ function FeedMenu() {
           </List>
         </Menu.Item>
         <Menu.Item>
-          {/* {user || filterTags.length > 0 ? <Label>Reset<Icon onClick={handleReset} name='delete'/></Label> : null} */}
         </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
@@ -145,14 +150,6 @@ function FeedMenu() {
                 />
             </Button.Group>
           </Menu.Item>
-          {/* <Pagination secondary size='tiny'
-            activePage={meta.page}
-            totalPages={meta.last}
-            ellipsisItem={null}
-            firstItem={null}
-            lastItem={null}
-            onPageChange={handlePaginationChange}
-          /> */}
         </Menu.Menu> 
       </Menu>
           <Pagination secondary size='tiny'

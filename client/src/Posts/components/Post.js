@@ -21,7 +21,7 @@ function Post({ id }) {
 
   useEffect(()=> {
     dispatch(_.show(id));
-  }, [dispatch]); 
+  }, [dispatch, id]); 
 
   if (status === 'loading') return <h1>Loading</h1>
   if (post) {

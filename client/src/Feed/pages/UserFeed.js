@@ -10,18 +10,17 @@ import { feed as _ } from '../../store';
 function UserFeed() {
 
   const dispatch = useDispatch();
-  const posts    = useSelector((state)=>state.feed.posts);
+  const { posts, tags, users }    = useSelector((state)=>state.feed);
 
   useEffect(()=>{
     dispatch(_.posts());
-    dispatch(_.users());
     dispatch(_.tags());
-
+    dispatch(_.users());
   }, [dispatch]);
 
   const contextRef = createRef();
   
-  if (posts) return(
+  if (posts && tags && users) return(
   <div>
   <Ref innerRef={contextRef}>
   <div>

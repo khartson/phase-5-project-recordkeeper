@@ -42,8 +42,12 @@ function NavBar() {
           icon='list layout'
           name='feed'as={Link} to='/feed'
           active={activeItem === 'feed'}
+          onClick={handleItemClick}/> 
+        <Menu.Item 
+          icon='add'
+          name='create'as={Link} to='/posts/create'
+          active={activeItem === 'create'}
           onClick={handleItemClick}/>
-          
         <Menu.Menu position='right'>
         <Dropdown item simple trigger={<Image avatar src={url}/>}>
           <Dropdown.Menu>
