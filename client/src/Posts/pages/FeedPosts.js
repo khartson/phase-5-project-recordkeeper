@@ -7,7 +7,7 @@ function FeedPosts() {
 
   // TODO - create pages for loading and no results requests
   const { posts, status } = useSelector((state)=>state.feed);
-  if (posts.data && posts.data.length != 0) {
+  if (posts.data && posts.data.length !== 0) {
     return (
       <Item.Group divided>
         {posts.data.map((post)=><FeedPost key={post.id} post={post}/>)}

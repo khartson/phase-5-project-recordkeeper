@@ -10,6 +10,16 @@ class Post {
       return { user: null, errors: error.response.data.errors };
     }
   }
+
+  async create(data) {
+    try {
+      const post = await axios.post('posts', data) 
+        return { post: post.data, errors: []}
+    }
+    catch(error) {
+      return { user: null, errors: error.response.data.errors }; 
+    }
+  }
 }
 
 export default new Post(); 

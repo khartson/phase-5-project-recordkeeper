@@ -9,6 +9,8 @@ class Post < ApplicationRecord
 
   validates :title, length: { in: 10..60 }
   validates :content, length: {in: 20..250 }
+  validates :preview_image, presence: { message: "must be selected for your post" }
+  validates :link, presence: { message: "must be selected for your post" }
   validates_length_of :tags, { maximum: 3 }
 
   accepts_nested_attributes_for :tags

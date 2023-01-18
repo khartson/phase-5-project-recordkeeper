@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tab,
+import { Container, Tab,
        } from 'semantic-ui-react';
 import { DeleteAccount, 
          EditProfile, 
@@ -17,7 +17,9 @@ function Settings() {
   ]
 
   return (
-    <Tab menu={{ fluid: true, tabular: true, vertical: true }} panes={panes}/>
+    <Container>
+      <Tab menu={{ fluid: true, tabular: true, vertical: true }} panes={panes}/>
+    </Container>
   )
 }
 

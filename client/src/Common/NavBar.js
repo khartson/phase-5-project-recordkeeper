@@ -44,7 +44,7 @@ function NavBar() {
           active={activeItem === 'feed'}
           onClick={handleItemClick}/> 
         <Menu.Item 
-          icon='add'
+          icon='edit outline'
           name='create'as={Link} to='/posts/create'
           active={activeItem === 'create'}
           onClick={handleItemClick}/>

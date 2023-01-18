@@ -4,7 +4,7 @@ import { Main } from './Common';
 import { Users, User } from './Users';
 import { Settings } from './Settings';
 import { UserFeed } from './Feed';
-import { CreatePost, Posts } from './Posts';
+import { CreatePost, Posts, PostView } from './Posts';
 
 function PrivateRouter() {
   return(
@@ -16,6 +16,7 @@ function PrivateRouter() {
         <Route path='/settings' element={<Settings/>}/>
         <Route path='/posts' element={<Posts/>}>
           <Route path='create' element={<CreatePost/>}/>
+          <Route path=':id' element={<PostView/>}/>
         </Route>
         <Route path='/users' element={<Users/>}>
           <Route path=':username' element={<User/>}/>
