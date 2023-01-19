@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   Grid,
@@ -8,19 +8,23 @@ import {
   Image,
   Label,
   List,
-  Divider
+  Divider,
+  Accordion,
+  Icon,
 } from 'semantic-ui-react';
 import LinkedPost from './LinkedPost';
 import EmbeddedPost from './EmbeddedPost';
-import { createIconUrl } from '../../Helpers';
+import Comments from '../../Comments/components/CommentList';
+import { createIconUrl, formatDate } from '../../Helpers';
 import { useSelector, useDispatch } from 'react-redux'
+import { post } from '../../store';
 
 function FullPost({ post, author }) {
 
   const { currentUser } = useSelector((state)=>state.session);
 
   return(
-     <Container style={{ paddingTop: 10}}>
+     <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
       <Card fluid>
         <Card.Content>
             <Grid stretched>
@@ -53,34 +57,56 @@ function FullPost({ post, author }) {
             </Label.Group>
         </Card.Content>
         <Card.Content>
-          <Grid stretched divided>
-            <Grid.Column width={10}>
+          <Grid stretched divided style={{ height: 600}}> 
+            <Grid.Column style={{ height: 600 }} width={10}> 
               {post.embeddable ?
                 <EmbeddedPost url={post.link}/>
               :
-               <LinkedPost/>
+               <LinkedPost url={post.link} imageUrl={post.preview_image}/>
               }
-
+              <Container>
+                 <PostContent content={post.content}/> 
+              </Container>
             </Grid.Column>
-            <Grid.Column width={6}>
-              <div>
+            <Grid.Column style={{ height: 600 }} width={6}>
                 <List>
                   <List.Item>
                     <Image avatar src={createIconUrl(author.icon)}/>
                     <List.Content>
                       <List.Header content={author.username}/>
-                      <List.Description>Post on</List.Description>
+                      <List.Description>{formatDate(post.created_at)}</List.Description>
                     </List.Content>
                   </List.Item>
                 </List>
-                <Divider/>
-                </div>
+                <Comments/>
             </Grid.Column>
           </Grid>
         </Card.Content>
       </Card>
     </Container>
   )
+}
+
+function PostContent({ content }) {
+
+  const [show, setShow] = useState(true);
+
+  return(
+      <Accordion>
+        <Accordion.Title active={show} onClick={()=>setShow(!show)}>
+          <Icon name='dropdown'/>
+          Description
+        </Accordion.Title>
+        <Accordion.Content active={show}>
+          <p>{content}</p>
+        </Accordion.Content>
+      </Accordion>
+  )
+
+}
+
+function PostHeader({ title, username, tags }) {
+  
 }
 
 export default FullPost;

@@ -7,7 +7,7 @@ import { Segment,
          Button,
          Icon,
                    } from 'semantic-ui-react';
-import { createIconUrl } from '../../Helpers';
+import { createIconUrl, formatDate } from '../../Helpers';
 import { Link } from 'react-router-dom'; 
 
 function User() {
@@ -37,7 +37,7 @@ function User() {
               ) : ( null )
               }
             </Item.Header>
-            <Item.Extra>Member Since</Item.Extra>
+            <Item.Extra><b>Member Since:</b>{formatDate(user.created_at)}</Item.Extra>
             <Item.Description><Icon color='black' name='film'/>Posts</Item.Description>
             <Item.Description><Icon name='comment'/> Comments</Item.Description>
           </Item.Content>
