@@ -17,6 +17,22 @@ export const create = createAsyncThunk(
   }
 )
 
+export const update = createAsyncThunk(
+  'posts/update',
+  async(data) => {
+    const res = post.update(data);
+    return res; 
+  }
+)
+
+export const destroy = createAsyncThunk(
+  'posts/destroy',
+  async(data) => {
+    const res = post.destroy(data);
+    return res; 
+  }
+)
+
 const postSlice = createSlice({
   name: 'post',
   initialState: {
@@ -27,6 +43,9 @@ const postSlice = createSlice({
   reducers: {
     clearPost(state) {
       state.post   = null;
+      state.errors = [];
+    },
+    clearErrors(state) {
       state.errors = [];
     }
 
@@ -47,10 +66,24 @@ const postSlice = createSlice({
       state.post   = action.payload.post;
       state.errors = action.payload.errors;
       state.status = 'idle'; 
+    },
+    [update.fulfilled](state, action) {
+      if (action.payload.post) {
+        state.post = action.payload.post;
+      }
+      state.errors = action.payload.errors;
+      state.status = 'idle';
+    },
+    [destroy.pending](state) {
+      state.status = 'loading';
+    },
+    [destroy.fulfilled](state, action) {
+      state.post   = action.payload.post
+      state.status = 'idle';
     }
   }
 })
 
-export const { clearPost } = postSlice.actions;
+export const { clearPost, clearErrors } = postSlice.actions;
 
 export default postSlice.reducer; 

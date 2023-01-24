@@ -1,6 +1,7 @@
 import React from 'react';
 import { Comment, Form, Button, Header } from 'semantic-ui-react';
 import style from '../../Common/Style';
+import CommentItem from './CommentItem';
 
 function Comments({ comments }) {
 
@@ -8,10 +9,13 @@ function Comments({ comments }) {
     <>
     <div style={style.div1}>
     <div style={style.div2}>
-    <Comment.Group size='mini' minimal>
+    <Comment.Group size='small' minimal>
     <Header as='h3' dividing>
       Comments
     </Header>
+    {comments.map((comment)=>{
+      return <CommentItem comment={comment}/>
+    })}
 
   </Comment.Group>
   </div> 

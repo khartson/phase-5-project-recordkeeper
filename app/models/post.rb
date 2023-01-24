@@ -7,6 +7,10 @@ class Post < ApplicationRecord
   # has_one :user
   belongs_to :author, class_name: "User", foreign_key: 'user_id'
 
+  # comments
+  has_many :comments
+  has_many :commenters, through: :comments, source: "user"
+
   validates :title, length: { in: 10..60 }
   validates :content, length: {in: 20..250 }
   validates :preview_image, presence: { message: "must be selected for your post" }

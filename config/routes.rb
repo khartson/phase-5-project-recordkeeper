@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  resources :comments
   scope module: 'api' do
 
     # default routes
     # resources :posts, exc
     resources :users, only: [:create, :update, :show], constraints: { id: /.*/ }
-    resources :posts, only: [:create, :update, :show]
+    resources :posts, only: [:create, :update, :show, :destroy]
 
     # feed results, for filtering and displaying 
     # shortform content related to user feeds 

@@ -2,7 +2,8 @@ class Api::PostsController < ApplicationController
 
   def show
     post = Post.find(params[:id])
-    render json: post
+    render json: post, serializer: PostSerializer,
+    include: ['comments', 'comments.user', 'tags', 'author']
   end 
 
   def create
@@ -10,6 +11,19 @@ class Api::PostsController < ApplicationController
     params[:tags].each { | tag | tags << Tag.find_or_create_by(name: tag)}
     post = Post.create!(**post_params, tags: tags)
     render json: post, status: :created
+  end 
+
+
+  def update
+    post = Post.find(params[:id])
+    post.update!(content: post_params[:content], title: post_params[:title])
+    render json: post
+  end 
+
+  def destroy
+    post = Post.find(params[:id])
+    post.destroy!
+    head :no_content
   end 
 
 
@@ -25,4 +39,5 @@ class Api::PostsController < ApplicationController
     params.require(:post)
     .permit(:title, :user_id, :content, :link, :embeddable, :preview_image)
   end 
+
 end

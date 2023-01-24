@@ -3,7 +3,6 @@ class ApplicationController < ActionController::API
   include Pagy::Backend 
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-  # rescue_from ActiveRecord::Rollback, with: :render_rollback_response
   
   before_action :authorize
   before_action :current_user?, only: [:update]
@@ -14,8 +13,9 @@ class ApplicationController < ActionController::API
   # hitting update routes, so that users cannot access
   # update endpoints for resources created by other users
   def current_user?
-    render json: { errors: ["You cannot edit this resource"] }, 
-           status: :unauthorized unless String(@current_user.id) == params[:id]
+    key = controller_name.classify.downcase.to_sym
+    render json: { errors: ["You cannot edit this resource"] },
+           status: :unauthorized unless @current_user.id == Integer(params[key][:user_id])
   end 
   
   # before action that ensures a user is logged in via client

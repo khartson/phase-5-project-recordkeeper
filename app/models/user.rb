@@ -3,6 +3,8 @@ class User < ApplicationRecord
 
   # relationships
   has_many :posts, dependent: :destroy
+  has_many :comments
+  has_many :commented_posts, through: :comments, source: 'post'
 
 
   # validations - username must exist and be unique
@@ -31,9 +33,10 @@ class User < ApplicationRecord
   # string which can be rendered on the frontend. Each svg
   # is unique and serves as a 'profile picture' for a user
   def set_icon
-    self.icon = Icodi.new(pixels: 10, 
-                                 density: 0.5, stroke: 0.2,
-                                 mirror: :none).render
+    self.icon = Icodi.new(
+      pixels: 10, 
+      density: 0.5, stroke: 0.2,
+      mirror: :none).render
   end 
 
 end

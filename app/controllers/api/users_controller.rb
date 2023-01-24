@@ -1,5 +1,6 @@
 class Api::UsersController < ApplicationController
 
+  before_action :current_user?, only: [:update]
   # def index
   #   @pagy, @users = pagy(User.all)
   #   render json: {
@@ -83,6 +84,15 @@ class Api::UsersController < ApplicationController
 
   def deletion_params
     params.require(:user).permit(:password)
+  end 
+
+
+  # before action that verifies client user before 
+  # hitting update routes, so that users cannot access
+  # update endpoints for resources created by other users
+  def current_user?
+    render json: { errors: ["You cannot edit this resource"] }, 
+           status: :unauthorized unless String(@current_user.id) == params[:id]
   end 
 
 end

@@ -146,7 +146,7 @@ function CreatePost() {
   { status === 'idle' && post ? (
     <Message success>
       <Image inline spaced style={{ width: 40, height: 40, objectFit: 'cover' }} src={post.preview_image}/>
-      Post created! <Link to={`posts/${post.id}`}><b>Click here to view it</b></Link> or <Link to='/feed'><b>go back to the main feed</b></Link>
+      Post created! <Link to={`/posts/${post.id}`}><b>Click here to view it</b></Link> or <Link to='/feed'><b>go back to the main feed</b></Link>
     </Message>
 
   ) : null }
