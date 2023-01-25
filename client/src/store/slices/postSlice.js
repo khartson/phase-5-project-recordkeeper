@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { post } from '../api';
+import { post, comment } from '../api';
 
 export const show = createAsyncThunk(
   'posts/show',
@@ -15,7 +15,7 @@ export const create = createAsyncThunk(
     const res = post.create(data);
     return res; 
   }
-)
+);
 
 export const update = createAsyncThunk(
   'posts/update',
@@ -23,7 +23,7 @@ export const update = createAsyncThunk(
     const res = post.update(data);
     return res; 
   }
-)
+);
 
 export const destroy = createAsyncThunk(
   'posts/destroy',
@@ -31,7 +31,31 @@ export const destroy = createAsyncThunk(
     const res = post.destroy(data);
     return res; 
   }
-)
+);
+
+export const createComment = createAsyncThunk(
+  'posts/createComment',
+  async(data) => {
+    const res = comment.create(data);
+    return res; 
+  }
+);
+
+export const deleteComment = createAsyncThunk(
+  'posts/deleteComment',
+  async(data) => {
+    const res = comment.delete(data); 
+    return res; 
+  }
+);
+
+export const updateComment = createAsyncThunk(
+  'posts/updateComment',
+  async(data) => {
+    const res = comment.update(data);
+    return res; 
+  }
+); 
 
 const postSlice = createSlice({
   name: 'post',
@@ -80,6 +104,23 @@ const postSlice = createSlice({
     [destroy.fulfilled](state, action) {
       state.post   = action.payload.post
       state.status = 'idle';
+    },
+    [createComment.fulfilled](state,action) {
+      state.post.comments = [...state.post.comments, action.payload.comment];
+    },
+    [deleteComment.fulfilled](state, action) {
+      const updatedComments = state.post.comments.filter((c)=>c.id !== action.payload.id); 
+      state.post.comments = updatedComments;
+    },
+    [updateComment.fulfilled](state, action) {
+      debugger;
+      const updatedComments = state.post.comments.map((comment) => {
+        if (comment.id === action.payload.comment.id) {
+          return action.payload.comment;
+        }
+        return comment; 
+      })
+      state.post.comments = updatedComments; 
     }
   }
 })

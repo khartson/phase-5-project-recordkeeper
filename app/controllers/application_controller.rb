@@ -13,6 +13,7 @@ class ApplicationController < ActionController::API
   # hitting update routes, so that users cannot access
   # update endpoints for resources created by other users
   def current_user?
+    
     key = controller_name.classify.downcase.to_sym
     render json: { errors: ["You cannot edit this resource"] },
            status: :unauthorized unless @current_user.id == Integer(params[key][:user_id])

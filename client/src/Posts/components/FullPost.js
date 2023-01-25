@@ -136,7 +136,7 @@ function FullPost({ post, author }) {
                     </List.Content>
                   </List.Item>
                 </List>
-                <Comments comments={post.comments}/>
+                <Comments comments={post.comments} postId={post.id}/>
             </Grid.Column>
           </Grid>
         </Card.Content>
