@@ -9,6 +9,7 @@ import { Segment,
                    } from 'semantic-ui-react';
 import { createIconUrl, formatDate } from '../../Helpers';
 import { Link } from 'react-router-dom'; 
+import { UserPosts } from '../../Posts';
 
 function User() {
 
@@ -38,12 +39,13 @@ function User() {
               }
             </Item.Header>
             <Item.Extra><b>Member Since:</b>{formatDate(user.created_at)}</Item.Extra>
-            <Item.Description><Icon color='black' name='film'/>Posts</Item.Description>
-            <Item.Description><Icon name='comment'/> Comments</Item.Description>
+            <Item.Description><Icon color='black' name='film'/><b>{user.posts.length}</b> Posts</Item.Description>
+            <Item.Description><Icon name='comment'/> <b>{user.commented_posts.length}</b> Commented Posts</Item.Description>
           </Item.Content>
         </Item>
         </Item.Group>
       </Segment>
+      <UserPosts posts={user.posts} commentedPosts={user.commented_posts} username={user.username}/>
     </>
   )
   return <h1>Not found</h1>

@@ -4,4 +4,5 @@ class PostSerializer < ActiveModel::Serializer
   has_many :tags
   has_many :comments, serializer: CommentSerializer
   belongs_to :author, serializer: PostUserSerializer
+  has_many :commenters, through: :comments
 end

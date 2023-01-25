@@ -91,7 +91,6 @@ function FeedMenu() {
   }
   return(
     <>
-    <Segment raised> 
     <Flicking className="p-4 mb-4" moveType="freeScroll" bound={true}
               filterTags={filterTags}>
         {tags.map((tag)=>{
@@ -103,6 +102,7 @@ function FeedMenu() {
           </span>)
         })}
       </Flicking>
+    <Segment raised> 
       <Menu size='small' color='teal' inverted secondary>
         <Menu.Item>
           <Icon name="user"/>

@@ -3,7 +3,7 @@ class Api::PostsController < ApplicationController
   def show
     post = Post.find(params[:id])
     render json: post, serializer: PostSerializer,
-    include: ['comments', 'comments.user', 'tags', 'author']
+    include: ['comments', 'comments.user', 'tags', 'author', 'commenters']
   end 
 
   def create

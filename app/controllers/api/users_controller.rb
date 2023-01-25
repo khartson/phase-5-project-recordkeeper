@@ -17,7 +17,9 @@ class Api::UsersController < ApplicationController
   def show
     user = User.find_by(username: params[:id])
     if user
-      render json: user
+      render json: user, include: 
+      ['posts', 'posts.author', 'posts.tags', 'commented_posts', 
+       'commented_posts.author', 'commented_posts.tags']
     else 
       render json: { errors: ["User not found"] }, status: :not_found
     end 

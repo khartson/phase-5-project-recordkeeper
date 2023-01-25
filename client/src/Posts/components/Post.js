@@ -6,12 +6,16 @@ import { Button,
          Segment,
          Container,
          Header,
-         Divider
+         Divider,
+         Popup
 } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { post as _ } from '../../store';
 import { createIconUrl } from '../../Helpers';
 import Embed from 'react-embed';
+import Flicking from '@egjs/react-flicking';
+import '@egjs/react-flicking/dist/flicking.css';
 
 function Post({ id }) {
 
@@ -65,6 +69,21 @@ function Post({ id }) {
           )} 
           {post.content}
           </Container>
+          <Divider horizontal><Header>Commenters</Header></Divider>
+          <Flicking moveType='freeScroll'>
+            {post.commenters.map((user)=>{
+              return(
+                <span key={user.id}>
+                  <Popup
+                  header={user.username}
+                  key={user.id}
+                  trigger={<Image as={Link} to={`/users/${user.username}`}avatar size='mini' src={createIconUrl(user.icon)}/>}
+                  />
+                </span>
+              )
+            })}
+          </Flicking>
+
         </Modal.Content>
       </>
     )

@@ -8,8 +8,8 @@ class Post < ApplicationRecord
   belongs_to :author, class_name: "User", foreign_key: 'user_id'
 
   # comments
-  has_many :comments
-  has_many :commenters, through: :comments, source: "user"
+  has_many :comments, dependent: :destroy
+  has_many :commenters, -> { distinct }, through: :comments, source: "user"
 
   validates :title, length: { in: 10..60 }
   validates :content, length: {in: 20..250 }
