@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.1
 info:
-  title: API V1
+  title: Recordkeeper API
   version: v1
 paths:
   "/comments":
@@ -9,6 +9,7 @@ paths:
       summary: create comment
       tags:
       - Comments
+      operationId: createComment
       parameters: []
       responses:
         '201':
@@ -43,6 +44,7 @@ paths:
       summary: update comment
       tags:
       - Comments
+      operationId: updateComment
       parameters: []
       responses:
         '200':
@@ -69,6 +71,7 @@ paths:
       summary: delete comment
       tags:
       - Comments
+      operationId: deleteComment
       responses:
         '204':
           description: no content
@@ -79,137 +82,676 @@ paths:
   "/posts":
     get:
       summary: posts feed
+      tags:
+      - Feed
+      operationId: getFeedPosts
+      description: Paginated posts (20 per page), optionally filtered by author id
+        and/or tag ids.
+      parameters:
+      - name: user
+        in: query
+        required: false
+        description: Author user id
+        schema:
+          type: integer
+      - name: tags[]
+        in: query
+        required: false
+        description: Tag ids
+        schema:
+          type: array
+          items:
+            type: integer
+        style: form
+        explode: true
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
-          description: successful
+          description: page of posts
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FeedPostPage"
     post:
       summary: create post
+      tags:
+      - Posts
+      operationId: createPost
+      parameters: []
       responses:
-        '200':
-          description: successful
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Post"
+        '422':
+          description: invalid
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationError"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 10
+                  maxLength: 60
+                content:
+                  type: string
+                  minLength: 20
+                  maxLength: 250
+                link:
+                  type: string
+                preview_image:
+                  type: string
+                embeddable:
+                  type: boolean
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 3
+                  description: Tag names; created if new
+              required:
+              - title
+              - content
+              - link
+              - preview_image
   "/users":
     get:
-      summary: users feed
+      summary: random users
+      tags:
+      - Feed
+      operationId: getFeedUsers
+      description: Up to 10 random users.
       responses:
         '200':
-          description: successful
-    post:
-      summary: create user
-      responses:
-        '200':
-          description: successful
+          description: users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/UserSummary"
   "/tags":
     get:
-      summary: tags feed
+      summary: all tags
+      tags:
+      - Feed
+      operationId: getTags
       responses:
         '200':
-          description: successful
+          description: tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Tag"
   "/posts/{id}":
     parameters:
     - name: id
       in: path
-      description: id
       required: true
       schema:
-        type: string
+        type: integer
     get:
       summary: show post
+      tags:
+      - Posts
+      operationId: getPost
       responses:
         '200':
-          description: successful
+          description: post with comments
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Post"
+        '404':
+          description: post not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
     patch:
       summary: update post
+      tags:
+      - Posts
+      operationId: updatePost
+      parameters: []
       responses:
         '200':
-          description: successful
-    put:
-      summary: update post
-      responses:
-        '200':
-          description: successful
+          description: updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Post"
+        '403':
+          description: not the owner
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: post not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: invalid
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationError"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 10
+                  maxLength: 60
+                content:
+                  type: string
+                  minLength: 20
+                  maxLength: 250
+              required:
+              - title
+              - content
     delete:
       summary: delete post
+      tags:
+      - Posts
+      operationId: deletePost
       responses:
-        '200':
-          description: successful
+        '204':
+          description: deleted
+        '403':
+          description: not the owner
+        '404':
+          description: post not found
   "/search":
     get:
-      summary: search search
+      summary: search users or tags
+      tags:
+      - Search
+      operationId: search
+      description: Pass exactly one of `user` (fuzzy username match, paginated) or
+        `tag` (substring match).
+      parameters:
+      - name: user
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: tag
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
-          description: successful
+          description: matching users or tags
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/UserSummary"
+                    meta:
+                      "$ref": "#/components/schemas/PaginationMeta"
+                  required:
+                  - data
+                  - meta
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/Tag"
+                  required:
+                  - data
+        '400':
+          description: no query given
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
   "/signup":
     post:
-      summary: signup session
+      summary: sign up
+      tags:
+      - Sessions
+      operationId: signup
+      security: []
+      parameters: []
       responses:
-        '200':
-          description: successful
-  "/me":
-    get:
-      summary: me session
-      responses:
-        '200':
-          description: successful
+        '201':
+          description: created and logged in
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '422':
+          description: invalid
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationError"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: string
+                  required:
+                  - username
+                  - password
+              required:
+              - user
   "/login":
     post:
-      summary: login session
+      summary: log in
+      tags:
+      - Sessions
+      operationId: login
+      security: []
+      parameters: []
+      responses:
+        '201':
+          description: logged in
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '401':
+          description: wrong username or password
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationError"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: string
+                  required:
+                  - username
+                  - password
+              required:
+              - user
+  "/me":
+    get:
+      summary: current user
+      tags:
+      - Sessions
+      operationId: me
       responses:
         '200':
-          description: successful
+          description: current user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '401':
+          description: not logged in
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
   "/logout":
     delete:
-      summary: logout session
+      summary: log out
+      tags:
+      - Sessions
+      operationId: logout
       responses:
-        '200':
-          description: successful
+        '204':
+          description: logged out
+        '401':
+          description: not logged in
   "/users/{id}":
     parameters:
     - name: id
       in: path
-      description: id
+      description: Username for GET; numeric user id for PATCH
       required: true
       schema:
         type: string
     get:
       summary: show user
+      tags:
+      - Users
+      operationId: getUser
       responses:
         '200':
-          description: successful
+          description: user profile with posts
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '404':
+          description: user not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
     patch:
       summary: update user
+      tags:
+      - Users
+      operationId: updateUser
+      parameters: []
       responses:
         '200':
-          description: successful
-    put:
-      summary: update user
-      responses:
-        '200':
-          description: successful
+          description: updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '401':
+          description: not your account
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: username taken
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationError"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+              required:
+              - username
   "/change_password":
     patch:
-      summary: change_password user
+      summary: change password
+      tags:
+      - Users
+      operationId: changePassword
+      parameters: []
       responses:
         '200':
-          description: successful
+          description: password changed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '401':
+          description: incorrect current password
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationError"
+        '422':
+          description: confirmation mismatch
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ValidationError"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: object
+                  properties:
+                    old_password:
+                      type: string
+                    change:
+                      type: object
+                      properties:
+                        password:
+                          type: string
+                        password_confirmation:
+                          type: string
+                      required:
+                      - password
+                      - password_confirmation
+                  required:
+                  - old_password
+                  - change
+              required:
+              - password
   "/new_icon":
     patch:
-      summary: new_icon user
+      summary: generate new icon
+      tags:
+      - Users
+      operationId: newIcon
       responses:
         '200':
-          description: successful
+          description: new icon
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  icon:
+                    type: string
+                required:
+                - icon
   "/delete_account":
     delete:
-      summary: delete_account user
+      summary: delete account
+      tags:
+      - Users
+      operationId: deleteAccount
+      parameters: []
       responses:
-        '200':
-          description: successful
+        '204':
+          description: account deleted
+        '401':
+          description: incorrect password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    password:
+                      type: string
+                  required:
+                  - password
+              required:
+              - user
 servers:
-- url: https://{defaultHost}
-  variables:
-    defaultHost:
-      default: localhost:3000
+- url: http://localhost:3000
+  description: Local
+security:
+- cookie_auth: []
 components:
+  securitySchemes:
+    cookie_auth:
+      type: apiKey
+      in: cookie
+      name: _session_id
   schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - errors
+    ValidationError:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+      - errors
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        icon:
+          type: string
+          nullable: true
+      required:
+      - id
+      - username
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+      - id
+      - name
+    FeedPost:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        preview_image:
+          type: string
+        summary:
+          type: string
+        tags:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Tag"
+        author:
+          "$ref": "#/components/schemas/UserSummary"
+        commenters:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserSummary"
+      required:
+      - id
+      - title
+      - preview_image
+      - summary
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        embeddable:
+          type: boolean
+          nullable: true
+        link:
+          type: string
+        preview_image:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Tag"
+        comments:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Comment"
+        author:
+          "$ref": "#/components/schemas/UserSummary"
+        commenters:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserSummary"
+      required:
+      - id
+      - title
+      - content
+      - link
+      - preview_image
+      - created_at
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        icon:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        posts:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FeedPost"
+        commented_posts:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FeedPost"
+      required:
+      - id
+      - username
+      - created_at
     Comment:
       type: object
       properties:
@@ -221,17 +763,39 @@ components:
           type: string
           format: date-time
         user:
-          type: object
-          properties:
-            id:
-              type: integer
-            username:
-              type: string
-            icon:
-              type: string
-              nullable: true
+          "$ref": "#/components/schemas/UserSummary"
       required:
       - id
       - content
       - created_at
       - user
+    PaginationMeta:
+      type: object
+      properties:
+        scaffold_url:
+          type: string
+        prev:
+          type: integer
+          nullable: true
+        page:
+          type: integer
+        next:
+          type: integer
+          nullable: true
+        last:
+          type: integer
+      required:
+      - page
+      - last
+    FeedPostPage:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FeedPost"
+        meta:
+          "$ref": "#/components/schemas/PaginationMeta"
+      required:
+      - data
+      - meta

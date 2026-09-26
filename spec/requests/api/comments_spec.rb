@@ -5,6 +5,7 @@ RSpec.describe 'api/comments', type: :request, logged_in: true do
   path '/comments' do
     post('create comment') do
       tags 'Comments'
+      operationId 'createComment'
       consumes 'application/json'
       produces 'application/json'
       parameter name: :comment, in: :body, schema: {
@@ -40,6 +41,7 @@ RSpec.describe 'api/comments', type: :request, logged_in: true do
 
     patch('update comment') do
       tags 'Comments'
+      operationId 'updateComment'
       consumes 'application/json'
       produces 'application/json'
       parameter name: :comment, in: :body, schema: {
@@ -74,6 +76,7 @@ RSpec.describe 'api/comments', type: :request, logged_in: true do
 
     delete('delete comment') do
       tags 'Comments'
+      operationId 'deleteComment'
       produces 'application/json'
 
       response(204, 'no content') do

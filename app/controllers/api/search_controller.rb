@@ -1,11 +1,12 @@
 class Api::SearchController < ApplicationController
 
   def search
-    # byebug
     if search_params[:user]
       search_users(search_params[:user])
     elsif search_params[:tag]
       search_tags(search_params[:tag])
+    else
+      render json: { errors: ["Provide a user or tag query"] }, status: :bad_request
     end 
   end 
 
@@ -21,11 +22,16 @@ class Api::SearchController < ApplicationController
       data: 
         ActiveModel::Serializer::CollectionSerializer.new(
           @users, serializer: UserSearchSerializer
-        )
+        ),
+      meta: pagy_metadata(@pagy)
     }
   end 
 
-  def search_tags
+  def search_tags(tag)
+    tags = Tag.where('name ILIKE ?', "%#{Tag.sanitize_sql_like(tag)}%").limit(20)
+    render json: {
+      data: ActiveModel::Serializer::CollectionSerializer.new(tags, serializer: TagSerializer)
+    }
   end 
 
 end

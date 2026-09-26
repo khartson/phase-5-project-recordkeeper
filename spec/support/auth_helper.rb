@@ -1,6 +1,7 @@
 RSpec.shared_context 'logged in' do
-  let(:user) { create(:user, password: 'password') }
-  before { post '/login', params: { user: { username: user.username, password: 'password' } } }
+  let(:logged_in_user) { create(:user, password: 'password') }
+  let(:user) { logged_in_user }
+  before { post '/login', params: { user: { username: logged_in_user.username, password: 'password' } } }
 end
 
 RSpec.configure do |config|
