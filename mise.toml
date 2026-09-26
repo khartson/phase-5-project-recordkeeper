@@ -1,0 +1,4 @@
+[env]
+PGHOST = "localhost"
+PGUSER = "postgres"
+PGPASSWORD = "postgres"
