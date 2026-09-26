@@ -51,6 +51,9 @@ RSpec.configure do |config|
             },
             required: %w[id content created_at user]
           }
+        },
+        securitySchemes: {
+          cookie_auth: { type: :apiKey, in: :cookie, name: '_session_id' }
         }
       }
     }

@@ -35,6 +35,9 @@ RSpec.describe 'api/comments', type: :request, logged_in: true do
   path '/comments/{id}' do
     parameter name: :id, in: :path, type: :integer
 
+    let(:existing_comment) { create(:comment, user: user) }
+    let(:id) { existing_comment.id }
+
     patch('update comment') do
       tags 'Comments'
       consumes 'application/json'
@@ -42,15 +45,12 @@ RSpec.describe 'api/comments', type: :request, logged_in: true do
       parameter name: :comment, in: :body, schema: {
         type: :object,
         properties: {
-          content: { type: :string },
-          user_id: { type: :integer }
+          content: { type: :string }
         },
-        required: %w[content user_id]
+        required: %w[content]
       }
 
-      let(:existing_comment) { create(:comment, user: user) }
-      let(:id) { existing_comment.id }
-      let(:comment) { { content: 'edited', user_id: user.id } }
+      let(:comment) { { content: 'edited' } }
 
       response(200, 'updated') do
         schema '$ref' => '#/components/schemas/Comment'
@@ -59,9 +59,34 @@ RSpec.describe 'api/comments', type: :request, logged_in: true do
         end
       end
 
-      response(401, 'not the owner') do
-        let(:comment) { { content: 'edited', user_id: user.id + 1 } }
+      response(403, 'not the owner') do
+        let(:existing_comment) { create(:comment) }
+        run_test! do
+          expect(existing_comment.reload.content).not_to eq('edited')
+        end
+      end
+
+      response(404, 'comment not found') do
+        let(:id) { 0 }
         run_test!
+      end
+    end
+
+    delete('delete comment') do
+      tags 'Comments'
+      produces 'application/json'
+
+      response(204, 'no content') do
+        run_test! do
+          expect(Comment.exists?(existing_comment.id)).to be(false)
+        end
+      end
+
+      response(403, 'not the owner') do
+        let(:existing_comment) { create(:comment) }
+        run_test! do
+          expect(Comment.exists?(existing_comment.id)).to be(true)
+        end
       end
 
       response(404, 'comment not found') do
