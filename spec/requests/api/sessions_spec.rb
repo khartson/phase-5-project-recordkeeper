@@ -31,7 +31,7 @@ RSpec.describe 'api/sessions', type: :request do
       response(201, 'created and logged in') do
         schema '$ref' => '#/components/schemas/User'
         run_test! do
-          get '/me'
+          get '/api/me'
           expect(response).to have_http_status(:ok)
         end
       end
@@ -59,7 +59,7 @@ RSpec.describe 'api/sessions', type: :request do
       response(201, 'logged in') do
         schema '$ref' => '#/components/schemas/User'
         run_test! do
-          get '/me'
+          get '/api/me'
           expect(response).to have_http_status(:ok)
         end
       end
@@ -97,7 +97,7 @@ RSpec.describe 'api/sessions', type: :request do
 
       response(204, 'logged out', logged_in: true) do
         run_test! do
-          get '/me'
+          get '/api/me'
           expect(response).to have_http_status(:unauthorized)
         end
       end

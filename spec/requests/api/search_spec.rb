@@ -3,7 +3,7 @@ require 'swagger_helper'
 RSpec.describe 'api/search', type: :request do
   # not using :logged_in, since its `user` let would be sent as the `user` query param
   let(:searcher) { create(:user, password: 'password') }
-  before { post '/login', params: { user: { username: searcher.username, password: 'password' } } }
+  before { post '/api/login', params: { user: { username: searcher.username, password: 'password' } } }
 
   path '/api/search' do
     get('search users or tags') do

@@ -3,7 +3,7 @@ require 'swagger_helper'
 RSpec.describe 'api/feed', type: :request do
   # not using :logged_in, since its `user` let would be sent as the `user` query param
   let(:viewer) { create(:user, password: 'password') }
-  before { post '/login', params: { user: { username: viewer.username, password: 'password' } } }
+  before { post '/api/login', params: { user: { username: viewer.username, password: 'password' } } }
 
   path '/api/posts' do
     get('posts feed') do
