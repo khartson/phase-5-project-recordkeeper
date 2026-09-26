@@ -45,8 +45,6 @@ end
 group :test do
   gem 'rspec-json_expectations'
   gem 'shoulda-matchers', '~> 6.0'
-  gem "rswag-specs"
-  gem 'factory_bot_rails'
 end
 
 gem "active_model_serializers", "~> 0.10.12"
@@ -61,5 +59,4 @@ gem "mutex_m"
 gem "base64"
 gem "drb"
 
-gem "rswag-api"
-gem "rswag-ui"
+gem "rswag"

@@ -84,11 +84,6 @@ GEM
     diff-lcs (1.6.2)
     drb (2.2.3)
     erubi (1.13.1)
-    factory_bot (6.6.0)
-      activesupport (>= 6.1.0)
-    factory_bot_rails (6.5.1)
-      factory_bot (~> 6.5)
-      railties (>= 6.1.0)
     faker (3.8.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.4-aarch64-linux-gnu)
@@ -233,6 +228,10 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.13.7)
+    rswag (2.17.0)
+      rswag-api (= 2.17.0)
+      rswag-specs (= 2.17.0)
+      rswag-ui (= 2.17.0)
     rswag-api (2.17.0)
       activesupport (>= 5.2, < 8.2)
       railties (>= 5.2, < 8.2)
@@ -285,7 +284,6 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   debug
   drb
-  factory_bot_rails
   faker
   icodi
   listen (~> 3.3)
@@ -298,9 +296,7 @@ DEPENDENCIES
   rails (~> 6.1.7)
   rspec-json_expectations
   rspec-rails (~> 6.0.0)
-  rswag-api
-  rswag-specs
-  rswag-ui
+  rswag
   shoulda-matchers (~> 6.0)
   tzinfo-data
 
