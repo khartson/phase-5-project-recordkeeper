@@ -51,7 +51,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Comment"
-        '401':
+        '403':
           description: not the owner
         '404':
           description: comment not found
@@ -63,11 +63,19 @@ paths:
               properties:
                 content:
                   type: string
-                user_id:
-                  type: integer
               required:
               - content
-              - user_id
+    delete:
+      summary: delete comment
+      tags:
+      - Comments
+      responses:
+        '204':
+          description: no content
+        '403':
+          description: not the owner
+        '404':
+          description: comment not found
   "/posts":
     get:
       summary: posts feed
@@ -199,7 +207,7 @@ servers:
 - url: https://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: localhost:3000
 components:
   schemas:
     Comment:
