@@ -40,6 +40,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
   gem 'rspec-rails', '~> 6.0.0'
+  gem 'factory_bot_rails'
 end
 
 group :test do
@@ -59,4 +60,4 @@ gem "mutex_m"
 gem "base64"
 gem "drb"
 
-gem "rswag"
+gem "rswag", '~> 2.17.0'

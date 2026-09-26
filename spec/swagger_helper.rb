@@ -27,11 +27,32 @@ RSpec.configure do |config|
           url: 'https://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }
-      ]
+      ],
+      components: {
+        schemas: {
+          Comment: {
+            type: :object,
+            properties: {
+              id: { type: :integer },
+              content: { type: :string },
+              created_at: { type: :string, format: 'date-time' },
+              user: {
+                type: :object,
+                properties: {
+                  id: { type: :integer },
+                  username: { type: :string },
+                  icon: { type: :string, nullable: true }
+                }
+              }
+            },
+            required: %w[id content created_at user]
+          }
+        }
+      }
     }
   }
 

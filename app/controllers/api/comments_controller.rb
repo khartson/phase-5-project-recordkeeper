@@ -8,19 +8,27 @@ class Api::CommentsController < ApplicationController
   
   def update
     comment = Comment.find(params[:id])
-    comment.update!(content: comment_params[:content])
-    render json: comment 
+    if comment.user == @current_user
+      comment.update!(content: comment_params[:content])
+      render json: comment 
+    else
+      head :forbidden
+    end
   end 
 
   def destroy
     comment = Comment.find(params[:id])
-    comment.destroy 
-    head :no_content 
+    if comment.user == @current_user
+      comment.destroy 
+      head :no_content 
+    else
+      head :forbidden
+    end
   end 
 
   private
 
   def comment_params
-    params.require(:comment).permit(:id, :content, :user_id, :post_id)
+    params.require(:comment).permit(:id, :content, :post_id)
   end 
 end
