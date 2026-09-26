@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 RSpec.describe 'api/users', type: :request, logged_in: true do
 
-  path '/users/{id}' do
+  path '/api/users/{id}' do
     parameter name: :id, in: :path, type: :string,
               description: 'Username for GET; numeric user id for PATCH'
 
@@ -64,7 +64,7 @@ RSpec.describe 'api/users', type: :request, logged_in: true do
     end
   end
 
-  path '/change_password' do
+  path '/api/change_password' do
     patch('change password') do
       tags 'Users'
       operationId 'changePassword'
@@ -121,7 +121,7 @@ RSpec.describe 'api/users', type: :request, logged_in: true do
     end
   end
 
-  path '/new_icon' do
+  path '/api/new_icon' do
     patch('generate new icon') do
       tags 'Users'
       operationId 'newIcon'
@@ -134,7 +134,7 @@ RSpec.describe 'api/users', type: :request, logged_in: true do
     end
   end
 
-  path '/delete_account' do
+  path '/api/delete_account' do
     delete('delete account') do
       tags 'Users'
       operationId 'deleteAccount'

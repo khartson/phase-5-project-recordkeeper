@@ -5,7 +5,7 @@ RSpec.describe 'api/feed', type: :request do
   let(:viewer) { create(:user, password: 'password') }
   before { post '/login', params: { user: { username: viewer.username, password: 'password' } } }
 
-  path '/posts' do
+  path '/api/posts' do
     get('posts feed') do
       tags 'Feed'
       operationId 'getFeedPosts'
@@ -50,7 +50,7 @@ RSpec.describe 'api/feed', type: :request do
     end
   end
 
-  path '/users' do
+  path '/api/users' do
     get('random users') do
       tags 'Feed'
       operationId 'getFeedUsers'
@@ -65,7 +65,7 @@ RSpec.describe 'api/feed', type: :request do
     end
   end
 
-  path '/tags' do
+  path '/api/tags' do
     get('all tags') do
       tags 'Feed'
       operationId 'getTags'

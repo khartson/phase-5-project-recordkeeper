@@ -5,7 +5,7 @@ RSpec.describe 'api/search', type: :request do
   let(:searcher) { create(:user, password: 'password') }
   before { post '/login', params: { user: { username: searcher.username, password: 'password' } } }
 
-  path '/search' do
+  path '/api/search' do
     get('search users or tags') do
       tags 'Search'
       operationId 'search'

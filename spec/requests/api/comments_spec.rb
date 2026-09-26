@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 RSpec.describe 'api/comments', type: :request, logged_in: true do
 
-  path '/comments' do
+  path '/api/comments' do
     post('create comment') do
       tags 'Comments'
       operationId 'createComment'
@@ -33,7 +33,7 @@ RSpec.describe 'api/comments', type: :request, logged_in: true do
   end
 
 
-  path '/comments/{id}' do
+  path '/api/comments/{id}' do
     parameter name: :id, in: :path, type: :integer
 
     let(:existing_comment) { create(:comment, user: user) }

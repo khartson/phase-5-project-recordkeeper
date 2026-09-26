@@ -4,7 +4,7 @@ info:
   title: Recordkeeper API
   version: v1
 paths:
-  "/comments":
+  "/api/comments":
     post:
       summary: create comment
       tags:
@@ -33,7 +33,7 @@ paths:
               required:
               - content
               - post_id
-  "/comments/{id}":
+  "/api/comments/{id}":
     parameters:
     - name: id
       in: path
@@ -79,7 +79,7 @@ paths:
           description: not the owner
         '404':
           description: comment not found
-  "/posts":
+  "/api/posts":
     get:
       summary: posts feed
       tags:
@@ -166,7 +166,7 @@ paths:
               - content
               - link
               - preview_image
-  "/users":
+  "/api/users":
     get:
       summary: random users
       tags:
@@ -182,7 +182,7 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/UserSummary"
-  "/tags":
+  "/api/tags":
     get:
       summary: all tags
       tags:
@@ -197,7 +197,7 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/Tag"
-  "/posts/{id}":
+  "/api/posts/{id}":
     parameters:
     - name: id
       in: path
@@ -282,7 +282,7 @@ paths:
           description: not the owner
         '404':
           description: post not found
-  "/search":
+  "/api/search":
     get:
       summary: search users or tags
       tags:
@@ -338,7 +338,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Error"
-  "/signup":
+  "/api/signup":
     post:
       summary: sign up
       tags:
@@ -379,7 +379,7 @@ paths:
                   - password
               required:
               - user
-  "/login":
+  "/api/login":
     post:
       summary: log in
       tags:
@@ -420,7 +420,7 @@ paths:
                   - password
               required:
               - user
-  "/me":
+  "/api/me":
     get:
       summary: current user
       tags:
@@ -439,7 +439,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Error"
-  "/logout":
+  "/api/logout":
     delete:
       summary: log out
       tags:
@@ -450,7 +450,7 @@ paths:
           description: logged out
         '401':
           description: not logged in
-  "/users/{id}":
+  "/api/users/{id}":
     parameters:
     - name: id
       in: path
@@ -511,7 +511,7 @@ paths:
                   type: string
               required:
               - username
-  "/change_password":
+  "/api/change_password":
     patch:
       summary: change password
       tags:
@@ -563,7 +563,7 @@ paths:
                   - change
               required:
               - password
-  "/new_icon":
+  "/api/new_icon":
     patch:
       summary: generate new icon
       tags:
@@ -581,7 +581,7 @@ paths:
                     type: string
                 required:
                 - icon
-  "/delete_account":
+  "/api/delete_account":
     delete:
       summary: delete account
       tags:

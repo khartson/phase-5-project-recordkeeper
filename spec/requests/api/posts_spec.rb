@@ -13,7 +13,7 @@ RSpec.describe 'api/posts', type: :request, logged_in: true do
     }
   end
 
-  path '/posts' do
+  path '/api/posts' do
     post('create post') do
       tags 'Posts'
       operationId 'createPost'
@@ -51,7 +51,7 @@ RSpec.describe 'api/posts', type: :request, logged_in: true do
     end
   end
 
-  path '/posts/{id}' do
+  path '/api/posts/{id}' do
     parameter name: :id, in: :path, type: :integer
 
     let(:blog_post) { create(:post, author: user) }

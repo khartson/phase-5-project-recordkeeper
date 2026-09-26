@@ -17,7 +17,7 @@ RSpec.describe 'api/sessions', type: :request do
     required: %w[user]
   }
 
-  path '/signup' do
+  path '/api/signup' do
     post('sign up') do
       tags 'Sessions'
       operationId 'signup'
@@ -44,7 +44,7 @@ RSpec.describe 'api/sessions', type: :request do
     end
   end
 
-  path '/login' do
+  path '/api/login' do
     post('log in') do
       tags 'Sessions'
       operationId 'login'
@@ -72,7 +72,7 @@ RSpec.describe 'api/sessions', type: :request do
     end
   end
 
-  path '/me' do
+  path '/api/me' do
     get('current user') do
       tags 'Sessions'
       operationId 'me'
@@ -90,7 +90,7 @@ RSpec.describe 'api/sessions', type: :request do
     end
   end
 
-  path '/logout' do
+  path '/api/logout' do
     delete('log out') do
       tags 'Sessions'
       operationId 'logout'
